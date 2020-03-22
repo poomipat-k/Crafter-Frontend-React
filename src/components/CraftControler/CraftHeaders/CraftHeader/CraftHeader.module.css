@@ -1,0 +1,16 @@
+.CraftHeader {
+    flex: 1;
+    margin: 5px;
+    cursor: pointer;
+    padding: 24px;
+    border-radius: 14px;
+    background-color: #2f4f4f;
+    color: white;
+    font-size: larger;
+    outline: none;
+    border-color: lightblue;
+}
+
+.CraftHeader:hover {
+    background-color: #87b6b6;
+}

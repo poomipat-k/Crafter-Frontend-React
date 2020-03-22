@@ -1,0 +1,9 @@
+.CraftHeadersContainer {
+    flex: 15%;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    box-sizing: border-box;
+
+}

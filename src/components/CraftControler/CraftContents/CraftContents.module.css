@@ -1,0 +1,7 @@
+.CraftContentsContainer {
+    flex: 85%;
+
+    display: flex;
+    flex-flow: row;
+    
+}

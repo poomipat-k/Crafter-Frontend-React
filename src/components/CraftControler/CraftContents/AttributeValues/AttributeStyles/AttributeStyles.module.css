@@ -1,0 +1,19 @@
+.AttributeStyles {
+
+    display: flex;
+    height: 400px;
+    flex-flow: row wrap;
+    overflow: auto;
+}
+
+.StyleItem {
+    width: 100px;
+    height: 50px;
+    background-color: sienna;
+    margin: 10px 10px;
+}
+
+.Label {
+    margin: 14px;
+    height: 20%;
+}

@@ -1,0 +1,52 @@
+.DesignLayout {
+    display: block;
+}
+
+.Canvas {
+    width: 80%;
+    margin: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    background-color: white;
+    display: block;
+    
+}
+
+.CraftControl {
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    margin-top: 32px;
+    margin-left: 5%;
+    width: 90%;
+    margin-right: 5%;
+}
+
+
+@media (min-width: 500px) {
+    .Canvas {
+        width: 400px;
+    }
+}
+
+
+@media (min-width: 800px) {
+
+    .DesignLayout {
+        display: flex;
+        flex-flow: row;
+        justify-content: flex-start;
+    }
+
+    .Canvas {
+        flex: 35%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+
+    .CraftControl {
+        margin: 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+        margin-right: 20px;
+        flex: 65%;
+        height: 600px;
+    }
+}

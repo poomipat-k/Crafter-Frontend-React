@@ -1,0 +1,12 @@
+.ProductAttributes {
+    flex: 15%;
+
+    display: flex;
+    flex-flow: column;
+    margin: 0;
+    padding: 0;
+}
+
+/* .AttributeItem {
+    flex: 1;
+} */

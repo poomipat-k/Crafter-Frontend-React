@@ -1,0 +1,8 @@
+.Subnav {
+    list-style: none;
+    display: flex;
+    flex-flow: row wrap;
+    padding-inline-start: 0px;
+    justify-content: center;
+    margin-bottom: 24px;
+}

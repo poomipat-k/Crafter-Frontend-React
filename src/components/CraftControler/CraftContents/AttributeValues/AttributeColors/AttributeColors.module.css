@@ -1,0 +1,12 @@
+
+.ColorsWrapper {
+    display: flex;
+    flex-flow: row wrap;
+    height: 400px;
+    overflow: auto;
+}
+
+.Label {
+    margin-left: 14px;
+    height: 20%;
+}
