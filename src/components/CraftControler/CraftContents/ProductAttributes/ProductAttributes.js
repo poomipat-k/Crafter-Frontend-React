@@ -12,7 +12,7 @@ const ProductAttributes = (props) => {
             key={itemKey}
             btnType="Cool"
             active={props.focusing === itemKey ? 'active' : null}
-            clicked={() => props.onFocusing(itemKey)}>
+            onClick={() => props.onFocusing(itemKey)}>
                 {itemKey}</Button>)
     })
 

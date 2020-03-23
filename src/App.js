@@ -17,7 +17,6 @@ const App = () => {
       <Route path="/about" exact component={About} />
       <Route path="/auth" exact component={Auth} />
       <Route path="/" exact component={Landing} />
-
       <Redirect to="/" />
     </Switch>
   );

@@ -32,6 +32,7 @@
 .Sold {
     color: lightgray;
     font-size: 0.9em;
+    text-align: end;
 }
 
 .ItemLayout img {

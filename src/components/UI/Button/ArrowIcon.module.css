@@ -1,0 +1,26 @@
+.Icon {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+  /* height: 40px;
+  width: 40px; */
+}
+
+.Icon:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.gray {
+  background-color: #f1f1f1;
+  color: black;
+}
+
+.green {
+  background-color: #4caf50;
+  color: white;
+}
+
+.round {
+  border-radius: 50%;
+}

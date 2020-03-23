@@ -22,13 +22,13 @@ const AttributeValues = (props) => {
     return (
         <div className={classes.AttributeValues}>
             <Button 
-                clicked={showStylesHandler} 
+                onClick={showStylesHandler} 
                 btnType="Success" 
                 active={!selectingColor ? 'active' : null}>
                     Style
             </Button>
             <Button 
-                clicked={showColorsHandler} 
+                onClick={showColorsHandler} 
                 btnType="Success"
                 active={selectingColor ? 'active' : null}>
                     Color

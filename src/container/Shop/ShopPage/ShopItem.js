@@ -7,24 +7,28 @@ import Card from "../../../components/UI/Card/Card";
 import classes from "./ShopItem.module.css";
 
 const ShopItem = props => {
-  let path = `/shop/${props.category}/${props.description}-id.${props.id}`.replace(/\s/g, "-");
-  // path = encodeURI(path)
+  let path = `/shop/${props.title}-id.${props.id}`.replace(
+    /\s/g,
+    "-"
+  );
+  path = encodeURI(path)
   // console.log(path);
 
   return (
     <Link to={path}>
       <Card className={classes.ItemLayout}>
-        <img src={props.imageUrl} alt={props.category} />
+        <img src={props.image} alt={props.category} />
         <div className={classes.ItemDescription}>
-          <p title={props.description}>{props.description}</p>
+          <p title={props.title}>{props.title}</p>
         </div>
         <div className={classes.ItemInfo}>
           <span className={classes.Price}>
             <p>{props.price} THB</p>
           </span>
-          <span className={classes.Sold}>
+          <div className={classes.Sold}>
+            <p>{props.stock} In stock</p>
             <p>{props.sold} sold</p>
-          </span>
+          </div>
         </div>
       </Card>
     </Link>
