@@ -1,74 +1,104 @@
-$imageDisplayWidth: 360px;
+$smallImageDisplayWidth: 360px;
+$mediumImageDisplayWidth: 500px;
+$smallSlideItemWidth: 60px;
+$mediumSlideItemWidth: 80px;
+$animateDuration: 500ms;
 
 .Container {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
-    padding: 0px;
-    background-color: white;
-    width: $imageDisplayWidth;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  padding: 0px;
+  background-color: white;
+  width: $smallImageDisplayWidth;
+  align-items: center;
+  justify-content: center;
 }
 
 .Container .DisplayImage img {
-    max-width: $imageDisplayWidth;
-    max-height: $imageDisplayWidth;
-    min-height: $imageDisplayWidth;
-    width: auto;
-    height: auto;
-    object-fit: cover;
-    /* width: 100%;
-    height: 100%;  */
-    
+  max-width: $smallImageDisplayWidth;
+  max-height: $smallImageDisplayWidth;
+  min-height: $smallImageDisplayWidth;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+}
+
+.Container button {
+  padding: 6px;
+  margin: auto;
+  border-radius: 5px;
+  background-color: #c76767;
+  color: white;
+  outline: none;
+}
+
+.Container button:hover {
+  background-color: #e47171;
 }
 
 .SlideBar {
-    display: flex;
-    flex-flow: row wrap;
-    overflow: hidden;
-    margin: 10px;
-    
+  display: flex;
+  flex-flow: row wrap;
+  overflow: hidden;
+  margin: 10px;
 }
 
 .SlideItem {
-    max-width: 60px;
-    max-height: 60px;
-    width: auto;
-    height: auto;
-    flex: 0 0 auto;
-
-    /* width: 80px;
-    height: 80px; */
-    
-    margin: 5px 10px;
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  max-width: $smallSlideItemWidth;
+  max-height: $smallSlideItemWidth;
+  width: auto;
+  height: auto;
+  flex: 0 0 auto;
+  margin: 5px 10px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .SlideBar .SlideItem img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .activeSlideItem {
-    box-shadow: 0px 12px 8px rgba(18, 61, 155, 0.5);
+  box-shadow: 0px 12px 8px rgba(18, 61, 155, 0.5);
 }
 
 .ArrowButton {
-    cursor: pointer;
-    height: 40px;
-    margin: 0px;
-    align-self: center;
+  cursor: pointer;
+  height: 40px;
+  margin: 0px;
+  align-self: center;
+  padding: 5px 0px;
+  background-color: rgba(100, 100, 100, 0.2);
+  border-radius: 50%;
 }
 
-.ArrowButton:hover, .ArrowButton:active {
-    border-radius: 50%;
-    background-color: rgba(100, 100, 100, 0.2);
+.ArrowButton:hover,
+.ArrowButton:active {
+  border-radius: 50%;
+  background-color: rgba(62, 194, 90, 0.5);
 }
 
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
+}
+
+@media (min-width: 768px) {
+  .Container {
+    width: $mediumImageDisplayWidth;
+  }
+  .Container .DisplayImage img {
+    max-width: $mediumImageDisplayWidth;
+    max-height: $mediumImageDisplayWidth;
+    min-height: $mediumImageDisplayWidth;
+  }
+
+  .SlideItem {
+    max-width: $mediumSlideItemWidth;
+    max-height: $mediumSlideItemWidth;
+  }
 }

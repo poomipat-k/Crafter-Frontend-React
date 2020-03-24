@@ -18,7 +18,7 @@ const Shop = props => {
     const fetchCategories = async () => {
       try {
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/api/shop`
+          `${process.env.REACT_APP_BACKEND_URL}/api/shop/categories`
         );
         setLoadedCategories(responseData.categories);
       } catch (err) {}
@@ -48,8 +48,13 @@ const Shop = props => {
             </Route>
           );
         })}
+        
         <Route path={`/shop/:postId`}>
           <ShopPost />
+        </Route>
+
+        <Route path={`/shop`} exact>
+          <ShopPage category="" />
         </Route>
 
         <Redirect to="/shop" />

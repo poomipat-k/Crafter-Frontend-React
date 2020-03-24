@@ -1,10 +1,8 @@
 import React from 'react';
 
-import ImageSlide from '../../components/UI/ImageSlide/ImageSlide';
-
-const about = (props) => {
+const about = () => {
     return (
-        <ImageSlide />
+        <h1>About Component</h1>
     );
 }
 

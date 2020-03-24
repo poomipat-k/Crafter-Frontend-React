@@ -26,20 +26,20 @@ const ShopPage = props => {
 
   let displayItems;
   if (!isLoading && loadedItems.length !== 0)
-  displayItems = loadedItems.map(item => {
-    return (
-      <ShopItem
-        key={item.id}
-        id={item.id}
-        category={item.categoryUrl}
-        image={item.smImage}
-        title={item.title}
-        price={item.price}
-        stock={item.stock}
-        sold={item.sold}
-      />
-    );
-  });
+    displayItems = loadedItems.map(item => {
+      return (
+        <ShopItem
+          key={item.id}
+          id={item.id}
+          category={item.categoryUrl}
+          image={item.Images[0]}
+          title={item.title}
+          price={item.price}
+          stock={item.stock}
+          sold={item.sold}
+        />
+      );
+    });
 
   return (
     <div className={classes.ItemsLayout}>

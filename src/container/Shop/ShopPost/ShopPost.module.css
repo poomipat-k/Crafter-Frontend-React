@@ -1,0 +1,32 @@
+
+.ModalHeader{
+    background-color: red;
+}
+
+.DeleteImageButton {
+    padding: 10px;
+    border: 2px solid red;
+    color: red;
+    background-color: white;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.DeleteImageButton:hover {
+    background-color: #f3b69e;
+}
+
+.DeletePostButton {
+    color: white;
+    padding: 10px;
+    background-color: red;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.DeletePostButton:hover {
+    background-color: #fc4848;
+}
+

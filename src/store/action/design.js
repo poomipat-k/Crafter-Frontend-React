@@ -8,7 +8,7 @@ const setDesignTemplate = data => {
   };
 };
 
-export const fetchDesignTemplateFail = () => {
+const fetchDesignTemplateFail = () => {
   return {
     type: actionTypes.FETCH_DESIGN_TEMPLATE_FAIL
   };
