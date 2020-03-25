@@ -1,16 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
 
+import * as actions from "../../../store/action/index";
 import classes from "./ImageSlide.module.scss";
 import NextIcon from "../../../assets/buttonIcon/next.svg";
 import BackIcon from "../../../assets/buttonIcon/back.svg";
 
 const ImageSlide = props => {
-  const IMAGES = props.images;
-  const [displayImage, setDisplayImage] = useState(IMAGES[0]);
+  const { images } = props;
+  const [imageArray, setImageArray] = useState(images);
+  const [displayImage, setDisplayImage] = useState(images[0]);
   const [slidebarRange, setSlidebarRange] = useState({
     start: 0,
     end: 3
   });
+  
+  const dispatch = useDispatch();
+
+  const onSetDisplayImage = useCallback(
+    img => dispatch(actions.setDisplayImage(img)),
+    [dispatch]
+  );
+
+  useEffect(() => {
+    setImageArray(images);
+    setDisplayImage(images[0])
+  }, [images]);
+
+  useEffect(() => {
+    //save data to redux when displayImage value change and get the image in the parent component
+    onSetDisplayImage(displayImage);
+  }, [onSetDisplayImage, displayImage]);
 
   const changeDisplayImageHandler = image => {
     setDisplayImage(image);
@@ -18,7 +38,7 @@ const ImageSlide = props => {
 
   const nextSlidebarHandler = () => {
     setSlidebarRange(prevState => {
-      if (prevState.end === IMAGES.length) {
+      if (prevState.end === imageArray.length) {
         return prevState;
       }
       return {
@@ -40,22 +60,49 @@ const ImageSlide = props => {
     });
   };
 
-  const slideBar = IMAGES.slice(slidebarRange.start, slidebarRange.end).map(
-    image => {
-      return (
-        <div
-          key={image}
-          className={[
-            classes.SlideItem,
-            displayImage === image && classes.activeSlideItem
-          ].join(" ")}
-          onMouseEnter={() => changeDisplayImageHandler(image)}
-        >
-          <img onLoad={function() {}} src={image} alt={image} />
-        </div>
-      );
-    }
-  );
+  let slideBar, back, next;
+  if (imageArray) {
+    slideBar = imageArray
+      .slice(slidebarRange.start, slidebarRange.end)
+      .map(image => {
+        return (
+          <div
+            key={image}
+            className={[
+              classes.SlideItem,
+              displayImage === image && classes.activeSlideItem
+            ].join(" ")}
+            onMouseEnter={() => changeDisplayImageHandler(image)}
+          >
+            <img onLoad={function() {}} src={image} alt={image} />
+          </div>
+        );
+      });
+
+    back = imageArray.length > 3 && (
+      <img
+        onClick={backSlidebarHandler}
+        className={[
+          classes.ArrowButton,
+          slidebarRange.start === 0 && classes.hidden
+        ].join(" ")}
+        src={BackIcon}
+        alt="back"
+      />
+    );
+
+    next = imageArray.length > 3 && (
+      <img
+        onClick={nextSlidebarHandler}
+        className={[
+          classes.ArrowButton,
+          slidebarRange.end === imageArray.length && classes.hidden
+        ].join(" ")}
+        src={NextIcon}
+        alt="next"
+      />
+    );
+  }
 
   return (
     <React.Fragment>
@@ -65,30 +112,11 @@ const ImageSlide = props => {
         </div>
 
         <div className={classes.SlideBar}>
-          {IMAGES.length > 3 && (
-            <img
-              onClick={backSlidebarHandler}
-              className={[
-                classes.ArrowButton,
-                slidebarRange.start === 0 && classes.hidden
-              ].join(" ")}
-              src={BackIcon}
-              alt="back"
-            />
-          )}
-          {slideBar}
 
-          {IMAGES.length > 3 && (
-            <img
-              onClick={nextSlidebarHandler}
-              className={[
-                classes.ArrowButton,
-                slidebarRange.end === IMAGES.length && classes.hidden
-              ].join(" ")}
-              src={NextIcon}
-              alt="next"
-            />
-          )}
+          {back}
+          {slideBar}
+          {next}
+
         </div>
       </div>
     </React.Fragment>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-
 import { useParams, useHistory } from "react-router-dom";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
+import { useSelector } from "react-redux";
 
 import ImageSlide from "../../../components/UI/ImageSlide/ImageSlide";
 import ErrorModal from "../../../components/UI/Modal/ErrorModal";
@@ -40,6 +40,7 @@ const ShopPost = () => {
     )
   });
 
+  const displayImage = useSelector(state => state.shop.displayImage);
   const history = useHistory();
 
   useEffect(() => {
@@ -94,7 +95,20 @@ const ShopPost = () => {
           ...modalConfig,
           headerClass: classes.ModalHeader,
           header: DELETE_IMAGE,
-          contentBody: "Are you sure to delete this image?"
+          contentBody: "Are you sure to delete this image?",
+          footer: (
+            <div>
+              <Button onClick={() => setShowModal(false)} btnType="Cool">
+                Cancel
+              </Button>
+              <Button
+                onClick={() => deleteImageHandler(id, displayImage)}
+                btnType="Danger"
+              >
+                Yes
+              </Button>
+            </div>
+          )
         });
         break;
       case EDIT_POST:
@@ -127,6 +141,28 @@ const ShopPost = () => {
   };
 
   const deleteImageHandler = (id, image) => {
+    let response;
+    const deleteImageRequest = async () => {
+      try {
+        response = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/api/shop/image/${id}`,
+          "DELETE",
+          JSON.stringify({ image: image }),
+          { "Content-Type": "application/json" }
+        );
+      } catch (err) {}
+      if (response && response.success) {
+        setLoadedPost(prevLoadedPost => {
+          const updatedPost = { ...prevLoadedPost };
+          const updatedImages = updatedPost.Images.filter(img => img !== image);
+          updatedPost.Images = updatedImages;
+          return updatedPost;
+        });
+      }
+    };
+
+    setShowModal(false);
+    deleteImageRequest();
   };
 
   let postData = null;

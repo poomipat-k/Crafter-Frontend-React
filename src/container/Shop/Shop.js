@@ -6,11 +6,12 @@ import ShopPage from "./ShopPage/ShopPage";
 import ShopPost from "./ShopPost/ShopPost";
 import LoadingSpinner from "../../components/UI/LodingSpinner/LoadingSpinner";
 import ErrorModal from "../../components/UI/Modal/ErrorModal";
+import NewPost from './NewPost/NewPost';
 import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import classes from "./Shop.module.css";
 
-const Shop = props => {
+const Shop = () => {
   const [loadedCategories, setLoadedCategories] = useState([]);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -32,7 +33,7 @@ const Shop = props => {
     subNavLinks = loadedCategories.map(cat => {
       let link = `/shop/${cat.url}`;
       return (
-        <SubNav key={cat.url} link={link} {...props}>
+        <SubNav key={cat.url} link={link}>
           {cat.name}
         </SubNav>
       );
@@ -48,7 +49,11 @@ const Shop = props => {
             </Route>
           );
         })}
-        
+
+        <Route path={`/shop/newpost`}>
+          <NewPost />
+        </Route>
+
         <Route path={`/shop/:postId`}>
           <ShopPost />
         </Route>
@@ -61,6 +66,7 @@ const Shop = props => {
       </Switch>
     );
   }
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -70,7 +76,11 @@ const Shop = props => {
         </div>
       )}
 
-      <ul className={classes.Subnav}>{subNavLinks}</ul>
+      <ul className={classes.Subnav}>
+        {subNavLinks}
+        <SubNav link="/shop/newpost">ADD POST</SubNav>
+      </ul>
+
       {routes}
     </React.Fragment>
   );

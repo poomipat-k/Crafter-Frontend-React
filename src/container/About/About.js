@@ -1,9 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const about = () => {
-    return (
-        <h1>About Component</h1>
-    );
-}
+  return <h1>Test About Page</h1>;
+};
 
 export default about;

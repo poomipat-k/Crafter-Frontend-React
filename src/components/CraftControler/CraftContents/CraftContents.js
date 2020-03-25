@@ -28,9 +28,9 @@ const CraftContents = (props) => {
 
 const mapStateToProps = state => {
     return {
-        attributes: state.content,
-        focusing: state.focusing,
-        canvas: state.canvas
+        attributes: state.design.content,
+        focusing: state.design.focusing,
+        canvas: state.design.canvas
     }
 }
 

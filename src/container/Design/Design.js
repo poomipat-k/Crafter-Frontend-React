@@ -43,9 +43,9 @@ const Design = props => {
 
 const mapStateToProps = state => {
   return {
-    error: state.error,
-    content: state.content,
-    canvas: state.canvas
+    error: state.design.error,
+    content: state.design.content,
+    canvas: state.design.canvas
   };
 };
 

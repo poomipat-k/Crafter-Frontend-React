@@ -8,7 +8,7 @@ const Canvas = (props) => <PoloSVG canvasData={props.canvas}/>;
 
 const mapStateToProps = state => {
     return {
-        canvas: state.canvas
+        canvas: state.design.canvas
     }
 }
 
