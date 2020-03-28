@@ -14,7 +14,7 @@ const DELETE_POST = "Delete Post";
 const DELETE_IMAGE = "Delete Image";
 const EDIT_POST = "Edit Post";
 
-const ShopPost = () => {
+const ShopPost = props => {
   const postId = useParams().postId;
   const id = postId.split("-id.").slice(-1)[0];
 
@@ -130,6 +130,22 @@ const ShopPost = () => {
     };
     setShowModal(false);
     deletePostRequest();
+
+    //////////////////////////////////////
+    const fetchCategories = async () => {
+      console.log("EXECUTED")
+      try {
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/api/shop/categories`
+        );
+        console.log(responseData.categories)
+        props.setCategories(responseData.categories);
+      } catch (err) {}
+    };
+    console.log("HEHE")
+    fetchCategories();
+    //////////////////////////////////////
+
     let redirectPath = `/shop`;
     if (loadedPost) {
       redirectPath = `/shop/${loadedPost.categoryUrl}`;

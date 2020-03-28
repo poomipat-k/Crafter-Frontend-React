@@ -11,8 +11,7 @@ const ShopItem = props => {
     /\s/g,
     "-"
   );
-  path = encodeURI(path)
-  // console.log(path);
+  // path = encodeURI(path)
 
   return (
     <Link to={path}>

@@ -12,6 +12,7 @@ const ShopPage = props => {
   const [loadedItems, setLoadedItems] = useState([]);
 
   const { category } = props;
+
   useEffect(() => {
     const fetchItems = async category => {
       try {

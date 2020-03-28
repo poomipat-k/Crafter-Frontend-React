@@ -6,14 +6,17 @@ import ShopPage from "./ShopPage/ShopPage";
 import ShopPost from "./ShopPost/ShopPost";
 import LoadingSpinner from "../../components/UI/LodingSpinner/LoadingSpinner";
 import ErrorModal from "../../components/UI/Modal/ErrorModal";
-import NewPost from './NewPost/NewPost';
+import NewPost from "./NewPost/NewPost";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 
 import classes from "./Shop.module.css";
 
-const Shop = () => {
+const Shop = props => {
   const [loadedCategories, setLoadedCategories] = useState([]);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+  const { pathname } = props.location;
+  console.log(loadedCategories)
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -27,8 +30,11 @@ const Shop = () => {
     fetchCategories();
   }, [sendRequest]);
 
+  const setCategoriesHandler = data => {
+    setLoadedCategories(data);
+  };
+
   let subNavLinks = null;
-  let routes = null;
   if (loadedCategories.length !== 0) {
     subNavLinks = loadedCategories.map(cat => {
       let link = `/shop/${cat.url}`;
@@ -38,7 +44,11 @@ const Shop = () => {
         </SubNav>
       );
     });
+  }
 
+  let routes = null;
+
+  if (loadedCategories !== 0) {
     routes = (
       <Switch>
         {loadedCategories.map(cat => {
@@ -50,12 +60,12 @@ const Shop = () => {
           );
         })}
 
-        <Route path={`/shop/newpost`}>
-          <NewPost />
+        <Route path={`/shop/newpost`} exact>
+          <NewPost setCategories={setCategoriesHandler} />
         </Route>
 
         <Route path={`/shop/:postId`}>
-          <ShopPost />
+          <ShopPost setCategories={setCategoriesHandler} />
         </Route>
 
         <Route path={`/shop`} exact>
