@@ -1,0 +1,151 @@
+$smallImageDisplayWidth: 360px;
+$mediumImageDisplayWidth: 500px;
+
+.SummaryCard {
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+  border-radius: 6px;
+  padding: 8px;
+  background-color: white;
+  width: $smallImageDisplayWidth;
+  align-items: flex-start;
+  justify-content: flex-start;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.soldContainer {
+  margin-top: 8px;
+  margin-left: 80%;
+}
+
+.font20 {
+  font-size: 20px;
+  word-break: break-word;
+}
+
+.gray {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.price {
+  display: block;
+  font-size: 24px;
+  font-weight: 500;
+  width: 90%;
+  text-align: right;
+  padding: 6px;
+  height: 36px;
+  line-height: 36px;
+}
+
+.sizeButtonContainer {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.sizeButton {
+  padding: 8px 8px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background: #f8f8f8;
+  box-sizing: border-box;
+  color: black;
+  margin: 4px;
+  text-decoration: none;
+  min-width: 50px;
+  min-height: 30px;
+  outline: none;
+  flex: 0 0 17%;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkMark {
+  position: absolute;
+  right: 1px;
+  bottom: 0px;
+  font-size: 16px;
+}
+
+.activeSize {
+  border: 2px solid #005687;
+  color: #005687;
+}
+
+.sizeButton:hover {
+  border: 2px solid #005687;
+  color: #005687;
+}
+
+.disabled {
+  color: #bbb;
+  border: 2px solid #ccc;
+  cursor: not-allowed;
+}
+
+.disabled:hover {
+  color: #bbb;
+  border: 2px solid #ccc;
+}
+
+.quantityContainer {
+  display: inline-block;
+  margin: 16px 0px;
+}
+
+.quantityInput {
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  margin: 0px;
+  padding: 0px;
+  text-align: center;
+  font-size: 20px;
+  width: 60px;
+  height: 32px;
+}
+.minusButton {
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-right: none;
+  border-radius: 2px;
+  margin: 0px;
+  width: 32px;
+  height: 32px;
+  padding: 0px;
+  background-color: white;
+  font-size: 20px;
+}
+
+.plusButton {
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-left: none;
+  border-radius: 2px;
+  margin: 0px;
+  width: 32px;
+  height: 32px;
+  padding: 0px;
+  background-color: white;
+  font-size: 20px;
+}
+
+.availableQuantity {
+  margin: 2px 16px;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 16px;
+  text-align: right;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media (min-width: 1024) {
+  .SummaryCard {
+    width: $mediumImageDisplayWidth;
+  }
+}

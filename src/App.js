@@ -7,7 +7,7 @@ import Design from "./container/Design/Design";
 import About from "./container/About/About";
 import Auth from "./container/Auth/Auth";
 import Shop from "./container/Shop/Shop";
-
+import Cart from "./container/Cart/Cart";
 
 const App = () => {
   let routes = (
@@ -17,6 +17,9 @@ const App = () => {
       <Route path="/about" exact component={About} />
       <Route path="/auth" exact component={Auth} />
       <Route path="/" exact component={Landing} />
+      <Route path="/cart" exact>
+        <Cart />
+      </Route>
       <Redirect to="/" />
     </Switch>
   );

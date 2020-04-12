@@ -14,14 +14,12 @@ const PoloSVG = (props) => {
                 .Polo-shadow{opacity:0.3;}
                 .Polo-sleeve-shadow-wrap{opacity:0.6;}
                 .Polo-sleeve-shadow{fill:#D6D7DD;}
-
                 .Polo-inner-collar{fill: ${props.canvasData.body.colors}; opacity: 0.3}
                 .Polo-body{fill: ${props.canvasData.body.colors};}
                 .Polo-collar{fill: ${props.canvasData.collar.colors};}
                 .Polo-placket{fill: ${props.canvasData.placket.colors};}
                 .Polo-sleeveEdge{fill: ${props.canvasData.sleeveEdge.colors};}
                 .Polo-button{fill: ${props.canvasData.button.colors};}
-                
                 ${pocketStyle}
                 `}
             </style>

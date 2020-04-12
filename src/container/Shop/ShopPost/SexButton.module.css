@@ -1,0 +1,17 @@
+.unisex {
+  background-color: rgba(0, 0, 0, 0.8);
+  margin: 8px;
+  color: white;
+}
+
+.male {
+  background-color: rgba(13, 26, 94, 0.9);
+  margin: 8px;
+  color: white;
+}
+
+.female {
+  background-color: rgba(221, 50, 31, 1);
+  margin: 8px;
+  color: white;
+}

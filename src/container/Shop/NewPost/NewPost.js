@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import { useForm } from "../../../shared/hooks/form-hook";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
@@ -8,61 +8,159 @@ import Input from "../../../components/FormElement/Input";
 import Button from "../../../components/FormElement/Button";
 import {
   VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH
+  VALIDATOR_MINLENGTH,
 } from "../../../shared/utils/validators";
+import StockForm from "../../../components/FormElement/Stock";
 import ImageUpload from "../../../components/FormElement/ImageUpload";
+import Alert from "../../../components/UI/Alert/Alert";
 import classes from "./NewPost.module.css";
 
 const INIT_FORM_STATE = {
   category: {
     value: "",
-    isValid: false
+    isValid: false,
   },
   title: {
     value: "",
-    isValid: false
+    isValid: false,
   },
   description: {
     value: "",
-    isValid: false
-  },
-  price: {
-    value: "",
-    isValid: false
-  },
-  stock: {
-    value: "",
-    isValid: false
+    isValid: false,
   },
   image: {
     value: [],
-    isValid: false
-  }
+    isValid: false,
+  },
 };
-
 const INIT_FORM_VALID = false;
 
-const NewPost = props => {
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const [formState, inputHandler, setFormData] = useForm(
-    INIT_FORM_STATE,
-    INIT_FORM_VALID
-  );
-  const [imageIndex, setImageIndex] = useState();
+const INIT_STOCK_FORM_STATE = {
+  unisex: {
+    xs: { qty: "", price: "" },
+    s: { qty: "", price: "" },
+    m: { qty: "", price: "" },
+    l: { qty: "", price: "" },
+    xl: { qty: "", price: "" },
+    "2xl": { qty: "", price: "" },
+    "3xl": { qty: "", price: "" },
+    "4xl": { qty: "", price: "" },
+    "5xl": { qty: "", price: "" },
+    "6xl": { qty: "", price: "" },
+  },
+  male: {
+    xs: { qty: "", price: "" },
+    s: { qty: "", price: "" },
+    m: { qty: "", price: "" },
+    l: { qty: "", price: "" },
+    xl: { qty: "", price: "" },
+    "2xl": { qty: "", price: "" },
+    "3xl": { qty: "", price: "" },
+    "4xl": { qty: "", price: "" },
+    "5xl": { qty: "", price: "" },
+    "6xl": { qty: "", price: "" },
+  },
+  female: {
+    xs: { qty: "", price: "" },
+    s: { qty: "", price: "" },
+    m: { qty: "", price: "" },
+    l: { qty: "", price: "" },
+    xl: { qty: "", price: "" },
+    "2xl": { qty: "", price: "" },
+    "3xl": { qty: "", price: "" },
+    "4xl": { qty: "", price: "" },
+    "5xl": { qty: "", price: "" },
+    "6xl": { qty: "", price: "" },
+  },
+};
 
-  const indexChangeHandler = useCallback(updatedImageIndex => {
+const NewPost = (props) => {
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [formState, inputHandler] = useForm(INIT_FORM_STATE, INIT_FORM_VALID);
+  const [imageIndex, setImageIndex] = useState();
+  const [stockFormState, setStockFormState] = useState(INIT_STOCK_FORM_STATE);
+  const [stockFormIsValid, setStockFormIsValid] = useState(false);
+
+  let [stockFormError, setStockFormError] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
+  useEffect(() => {
+    if (showSuccessAlert) {
+      let animationTimer = setTimeout(() => {
+        setShowSuccessAlert(false);
+      }, 3000);
+      return () => {
+        clearTimeout(animationTimer);
+      };
+    }
+  }, [showSuccessAlert]);
+
+  const indexChangeHandler = useCallback((updatedImageIndex) => {
     setImageIndex(updatedImageIndex);
   }, []);
 
-  const submitHandler = async event => {
+  const cleanStockForm = (state) => {
+    // Deep copy stock state
+    let cleanedState = { ...state };
+    for (let sex in state) {
+      cleanedState[sex] = { ...state[sex] };
+      for (let size in state[sex]) {
+        cleanedState[sex][size] = { ...state[sex][size] };
+      }
+    }
+    // Delete blank field
+    for (let sex in cleanedState) {
+      let thisSexIsBlank = true;
+      for (let size in cleanedState[sex]) {
+        // if (!cleanedState[sex][size].qty || !cleanedState[sex][size].price) {
+        //   delete cleanedState[sex][size];
+        // }
+        thisSexIsBlank =
+          thisSexIsBlank &&
+          !(
+            cleanedState[sex][size].qty > 0 || cleanedState[sex][size].price > 0
+          );
+      }
+      if (thisSexIsBlank) {
+        delete cleanedState[sex];
+      }
+    }
+    return cleanedState;
+  };
+
+  const submitHandler = async (event) => {
     event.preventDefault();
     try {
       const formData = new FormData();
       formData.append("category", formState.inputs.category.value);
       formData.append("title", formState.inputs.title.value);
       formData.append("description", formState.inputs.description.value);
-      formData.append("price", formState.inputs.price.value);
-      formData.append("stock", formState.inputs.stock.value);
+
+      let leanStockData = cleanStockForm(stockFormState);
+      formData.append("stock", JSON.stringify(leanStockData));
+
+      let lowestPrice = 1000000;
+      let maxPrice = 0;
+      for (let sex in leanStockData) {
+        for (let size in leanStockData[sex]) {
+          let thisPrice = +leanStockData[sex][size].price;
+          if (thisPrice > 0 && thisPrice < lowestPrice) {
+            lowestPrice = thisPrice;
+          }
+          if (thisPrice > maxPrice) {
+            maxPrice = thisPrice;
+          }
+        }
+      }
+
+      if (lowestPrice === 1000000 || maxPrice === 0) {
+        throw new Error(
+          "Price data is not valid! please review your price data."
+        );
+      }
+      formData.append("price", lowestPrice);
+      formData.append("maxPrice", maxPrice);
+
       formData.append("imageIndex", imageIndex);
       if (formState.inputs.image.value.length) {
         for (let i = 0; i < formState.inputs.image.value.length; i++) {
@@ -74,24 +172,24 @@ const NewPost = props => {
         "POST",
         formData
       );
-    } catch (err) {}
-    
-    const fetchCategories = async () => {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/api/shop/categories`
-        );
-        props.setCategories(responseData.categories);
-      } catch (err) {}
-    };
-    fetchCategories();
-
-    setFormData(INIT_FORM_STATE, false);
+      props.fetchCategories();
+      setShowSuccessAlert(true);
+    } catch (err) {
+      setStockFormError(err.message);
+    }
   };
 
   return (
     <React.Fragment>
+      <Alert
+        showSuccessAlert={showSuccessAlert}
+        message="Successfully added a new post!"
+      />
       <ErrorModal error={error} onClear={clearError} />
+      <ErrorModal
+        error={stockFormError}
+        onClear={() => setStockFormError(false)}
+      />
 
       <form className={classes.FormContainer} onSubmit={submitHandler}>
         {isLoading && <LoadingSpinner asOverlay />}
@@ -124,26 +222,13 @@ const NewPost = props => {
           onInput={inputHandler}
           value={formState.inputs.description.value}
         />
-        <Input
-          id="price"
-          element="input"
-          type="number"
-          label="Price"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid price."
-          onInput={inputHandler}
-          value={formState.inputs.price.value}
+
+        <StockForm
+          onInputChange={setStockFormState}
+          stockFormState={stockFormState}
+          setStockFormIsValid={setStockFormIsValid}
         />
-        <Input
-          id="stock"
-          element="input"
-          type="number"
-          label="Stock"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid stock."
-          onInput={inputHandler}
-          value={formState.inputs.stock.value}
-        />
+
         <ImageUpload
           id="image"
           onInput={inputHandler}
@@ -151,7 +236,11 @@ const NewPost = props => {
           errorText="Please provide at least one image"
           value={formState.inputs.image.value}
         />
-        <Button type="submit" disabled={!formState.isValid}>
+
+        <Button
+          type="submit"
+          disabled={!formState.isValid || !stockFormIsValid}
+        >
           POST
         </Button>
       </form>

@@ -9,8 +9,10 @@
 
 .ItemDescription {
   width: 100%;
-  height: 22%;
+  height: 15%;
   overflow: hidden;
+  word-wrap: break-word;
+  color: rgba(0, 0, 0, 0.75);
 }
 
 .ItemInfo {
@@ -21,7 +23,7 @@
 
 .ItemLayout p {
   margin: 0;
-  padding: 0 4px;
+  padding: 0 2px;
   overflow: hidden;
 }
 
@@ -30,14 +32,13 @@
 }
 
 .Sold {
-    color: lightgray;
-    font-size: 0.9em;
-    text-align: end;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 0.9em;
+  text-align: end;
 }
 
 .ItemLayout img {
   width: 100%;
   height: 70%;
   object-fit: cover;
-
 }

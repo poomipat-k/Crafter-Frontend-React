@@ -7,8 +7,8 @@ $animateDuration: 500ms;
 .Container {
   display: flex;
   flex-direction: column;
-  margin: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 0px;
+  // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 6px;
   padding: 0px;
   background-color: white;
@@ -49,6 +49,8 @@ $animateDuration: 500ms;
 .SlideItem {
   max-width: $smallSlideItemWidth;
   max-height: $smallSlideItemWidth;
+  min-width: $smallSlideItemWidth;
+  min-height: $smallSlideItemWidth;
   width: auto;
   height: auto;
   flex: 0 0 auto;
@@ -100,5 +102,7 @@ $animateDuration: 500ms;
   .SlideItem {
     max-width: $mediumSlideItemWidth;
     max-height: $mediumSlideItemWidth;
+    min-width: $mediumSlideItemWidth;
+    min-height: $mediumSlideItemWidth;
   }
 }

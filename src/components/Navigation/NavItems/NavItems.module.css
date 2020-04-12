@@ -1,15 +1,29 @@
 .NavItems {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  height: 100%;
+}
+
+.LogoutButton {
+  cursor: pointer;
+  border: 1px solid white;
+  color: white;
+  background: transparent;
+  padding: 0.5rem;
+  font: inherit;
+  margin: 0 5px;
+}
+
+.LogoutButton:hover {
+  background: rgb(255, 44, 44);
 }
 
 @media (min-width: 500px) {
-    .NavItems {
-        flex-flow: row;
-    }
+  .NavItems {
+    flex-flow: row;
+  }
 }

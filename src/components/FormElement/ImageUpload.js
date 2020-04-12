@@ -12,8 +12,8 @@ const ImageUpload = props => {
   const { onUpdatedImageIndex } = props;
 
   const filePickerRef = useRef();
-  const { value } = props;
 
+  const { value } = props;
   useEffect(() => {
     setFiles(value);
   }, [value]);

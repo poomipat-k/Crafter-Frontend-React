@@ -1,0 +1,18 @@
+.IconContainer {
+  display: inline-block;
+  position: relative;
+}
+
+.CartIcon {
+  fill: white;
+}
+
+.quantity {
+  position: absolute;
+  right: -12px;
+  top: -14px;
+  background-color: red;
+  border-radius: 50%;
+  width: 25px;
+  text-align: center;
+}

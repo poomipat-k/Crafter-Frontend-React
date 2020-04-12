@@ -14,6 +14,14 @@
   display: block;
 }
 
+.NavItem path {
+  fill: #5a320e;
+}
+.NavItem span {
+  color: white
+}
+
+
 .NavItem a:hover,
 .NavItem a:active,
 .NavItem a.active {
@@ -28,6 +36,10 @@
     height: 100%;
     width: auto;
     align-items: center;
+  }
+
+  .NavItem path {
+    fill: white;
   }
 
   .NavItem a {

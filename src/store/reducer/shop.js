@@ -1,18 +1,21 @@
-import * as actionTypes from '../action/actionTypes';
+import * as actionTypes from "../action/actionTypes";
 
 let initialState = {
-    displayImage: null
+  displayImage: null,
 };
 
 const setDisplayImage = (state, action) => {
-    return {displayImage: action.image}
+  return { ...state, displayImage: action.image };
 };
 
 const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case actionTypes.SET_DISPLAY_IMAGE: return setDisplayImage(state, action);
-        default: return state;
-    }
-}
+  switch (action.type) {
+    case actionTypes.SET_DISPLAY_IMAGE:
+      return setDisplayImage(state, action);
+
+    default:
+      return state;
+  }
+};
 
 export default reducer;

@@ -10,6 +10,7 @@ const SideDrawer = props => {
     if (props.open) {
         attachedClasses = [classes.SideDrawer, classes.Open];
     }
+
     return (
         <React.Fragment>
             {props.open && <Backdrop onClick={props.closed}/>}

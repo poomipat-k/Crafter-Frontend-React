@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import ShopItem from "./ShopItem";
 import LoadingSpinner from "../../../components/UI/LodingSpinner/LoadingSpinner";
@@ -13,17 +13,21 @@ const ShopPage = props => {
 
   const { category } = props;
 
-  useEffect(() => {
-    const fetchItems = async category => {
+  const fetchItems = useCallback(
+    async category => {
       try {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/api/shop/${category}`
         );
         setLoadedItems(responseData.shopItems);
       } catch (err) {}
-    };
+    },
+    [sendRequest]
+  );
+
+  useEffect(() => {
     fetchItems(category);
-  }, [sendRequest, category]);
+  }, [sendRequest, category, fetchItems]);
 
   let displayItems;
   if (!isLoading && loadedItems.length !== 0)
@@ -36,7 +40,7 @@ const ShopPage = props => {
           image={item.Images[0]}
           title={item.title}
           price={item.price}
-          stock={item.stock}
+          stock={item.stock.total}
           sold={item.sold}
         />
       );

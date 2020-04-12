@@ -1,0 +1,34 @@
+.FormContainer {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  width: 60%;
+  margin: auto;
+}
+
+.Form {
+  width: 75%;
+  margin: auto;
+  padding: 16px;
+}
+
+.switchButton {
+  margin: 16px 0px;
+}
+
+.switchButton button {
+  background-color: #313131;
+  color: white;
+  border-color: #313131;
+}
+
+.switchButton button:hover,
+.switchButton button:active {
+    background-color: #555555;
+    color: white;
+    border-color: #555555;
+}
+
+@media (min-width: 1024px) {
+  .FormContainer {
+    width: 600px;
+  }
+}

@@ -105,7 +105,6 @@ const ImageSlide = props => {
   }
 
   return (
-    <React.Fragment>
       <div className={classes.Container}>
         <div className={classes.DisplayImage}>
           <img src={displayImage} alt={displayImage} />
@@ -119,7 +118,6 @@ const ImageSlide = props => {
 
         </div>
       </div>
-    </React.Fragment>
   );
 };
 

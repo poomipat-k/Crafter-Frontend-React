@@ -9,15 +9,15 @@ import LoadingSpinner from "../../../components/UI/LodingSpinner/LoadingSpinner"
 import Modal from "../../../components/UI/Modal/Modal";
 import classes from "./ShopPost.module.css";
 import Button from "../../../components/UI/Button/Button";
+import SummaryCard from "./SummaryCard";
 
 const DELETE_POST = "Delete Post";
 const DELETE_IMAGE = "Delete Image";
 const EDIT_POST = "Edit Post";
 
-const ShopPost = props => {
+const ShopPost = () => {
   const postId = useParams().postId;
   const id = postId.split("-id.").slice(-1)[0];
-
   const [loadedPost, setLoadedPost] = useState(null);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [showModal, setShowModal] = useState(false);
@@ -37,10 +37,10 @@ const ShopPost = props => {
         </Button>
         <Button btnType="Danger">Yes</Button>
       </div>
-    )
+    ),
   });
 
-  const displayImage = useSelector(state => state.shop.displayImage);
+  const displayImage = useSelector((state) => state.shop.displayImage);
   const history = useHistory();
 
   useEffect(() => {
@@ -59,17 +59,21 @@ const ShopPost = props => {
   useEffect(() => {
     let path;
     if (loadedPost) {
-      path = `/shop/${loadedPost.title}-id.${loadedPost.id}`.replace(
+      path = `/shop/post/${loadedPost.title}-id.${loadedPost.id}`.replace(
         /\s/g,
         "-"
       );
       if (path.split("/").slice(-1)[0] !== postId) {
+        console.log("PATH: ",path)
+        console.log('POSTID: ', postId)
+
+        console.log(path.split("/").slice(-1)[0])
         history.push(path);
       }
     }
   }, [loadedPost, history, postId]);
 
-  const showModalHandler = event => {
+  const showModalHandler = (event) => {
     let modalType = event.target.textContent;
     switch (modalType) {
       case DELETE_POST:
@@ -87,7 +91,7 @@ const ShopPost = props => {
               </Button>
             </div>
           ),
-          contentBody: "Are you sure to delete this post?"
+          contentBody: "Are you sure to delete this post?",
         });
         break;
       case DELETE_IMAGE:
@@ -108,7 +112,7 @@ const ShopPost = props => {
                 Yes
               </Button>
             </div>
-          )
+          ),
         });
         break;
       case EDIT_POST:
@@ -119,7 +123,7 @@ const ShopPost = props => {
     setShowModal(true);
   };
 
-  const deletePostHandler = id => {
+  const deletePostHandler = (id) => {
     const deletePostRequest = async () => {
       try {
         await sendRequest(
@@ -131,29 +135,18 @@ const ShopPost = props => {
     setShowModal(false);
     deletePostRequest();
 
-    //////////////////////////////////////
-    const fetchCategories = async () => {
-      console.log("EXECUTED")
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/api/shop/categories`
-        );
-        console.log(responseData.categories)
-        props.setCategories(responseData.categories);
-      } catch (err) {}
-    };
-    console.log("HEHE")
-    fetchCategories();
-    //////////////////////////////////////
+    setLoadedPost(null);
 
     let redirectPath = `/shop`;
     if (loadedPost) {
       redirectPath = `/shop/${loadedPost.categoryUrl}`;
     }
+
     setLoadedPost(null);
+
     setTimeout(() => {
-      history.replace(redirectPath);
-    }, 300);
+      history.push(redirectPath);
+    }, 500);
   };
 
   const deleteImageHandler = (id, image) => {
@@ -168,9 +161,11 @@ const ShopPost = props => {
         );
       } catch (err) {}
       if (response && response.success) {
-        setLoadedPost(prevLoadedPost => {
+        setLoadedPost((prevLoadedPost) => {
           const updatedPost = { ...prevLoadedPost };
-          const updatedImages = updatedPost.Images.filter(img => img !== image);
+          const updatedImages = updatedPost.Images.filter(
+            (img) => img !== image
+          );
           updatedPost.Images = updatedImages;
           return updatedPost;
         });
@@ -182,26 +177,34 @@ const ShopPost = props => {
   };
 
   let postData = null;
+  let summary = null;
   if (loadedPost) {
-    postData = (
-      <div style={{ textAlign: "center" }}>
-        <ImageSlide images={loadedPost.Images} />
-
-        <button className={classes.DeleteImageButton}>Edit Post</button>
-        <button
-          className={classes.DeleteImageButton}
-          onClick={showModalHandler}
-        >
-          Delete Image
-        </button>
-        <button className={classes.DeletePostButton} onClick={showModalHandler}>
-          Delete Post
-        </button>
-
-        <h1>{loadedPost.title}</h1>
-        <h2>{loadedPost.description}</h2>
-      </div>
+    postData = <ImageSlide images={loadedPost.Images} />;
+    summary = (
+      <SummaryCard
+        title={loadedPost.title}
+        sold={loadedPost.sold}
+        price={loadedPost.price}
+        maxPrice={loadedPost.maxPrice}
+        postData={loadedPost}
+      />
     );
+  }
+
+  const adminButtons = (
+    <div className={classes.AdminButtons}>
+      <button className={classes.DeleteImageButton} onClick={showModalHandler}>
+        Delete Image
+      </button>
+      <button className={classes.DeletePostButton} onClick={showModalHandler}>
+        Delete Post
+      </button>
+    </div>
+  );
+
+  let productDescription;
+  if (loadedPost) {
+    productDescription = loadedPost.description;
   }
 
   return (
@@ -228,7 +231,19 @@ const ShopPost = props => {
         </div>
       )}
 
-      {postData}
+      <div className={classes.PostContainer}>
+        <div className={classes.ImageAndSummary}>
+          {postData}
+          {summary}
+        </div>
+        <div style={{ margin: "auto" }}>{adminButtons}</div>
+        {productDescription && (
+          <div className={classes.description}>
+            <h1>Product description</h1>
+            <span style={{ fontSize: "24px" }}>{productDescription}</span>
+          </div>
+        )}
+      </div>
     </React.Fragment>
   );
 };

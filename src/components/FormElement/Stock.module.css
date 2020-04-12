@@ -1,0 +1,71 @@
+.Label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.unisex {
+  background-color: rgb(0, 0, 0, 0.8);
+  color: white;
+}
+
+.male {
+  background-color: rgb(13, 26, 94, 0.9);
+  color: white;
+}
+
+.female {
+  background-color: rgb(221, 50, 31);
+  color: white;
+}
+
+button {
+  border-radius: 10px;
+  padding: 8px;
+  margin-right: 5px;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.Number {
+  width: 80px;
+  border-radius: 3px;
+  height: 20px;
+  margin: 2px;
+}
+
+.Item {
+  margin: 5px 20px;
+}
+
+.Item label {
+  margin-left: 5px;
+}
+
+.StockFormContainer {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin-top: 5px;
+  border-radius: 20px;
+}
+
+.BlackBackground {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.BlueBackground {
+  background-color: rgba(13, 26, 94, 0.25);
+}
+
+.RedBackground {
+  background-color: rgba(221, 50, 31, 0.25);
+}
+
+.Invalid {
+  border: 1px solid rgb(255, 0, 0);
+  box-sizing: border-box;
+  background-color: rgba(255, 0, 0, 0.25);
+  color: rgb(55, 0, 255);
+}
