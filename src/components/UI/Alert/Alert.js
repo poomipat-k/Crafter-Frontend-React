@@ -6,13 +6,13 @@ import { CSSTransition } from "react-transition-group";
 const Alert = props => {
   return (
     <CSSTransition
-      in={props.showSuccessAlert}
+      in={props.show}
       mountOnEnter
       unmountOnExit
       timeout={500}
       classNames="alert_animation"
     >
-      <div className="alert_style">{props.message}</div>
+      <div className={`alert_style ${props.alertClass}`}>{props.message}</div>
     </CSSTransition>
   );
 };

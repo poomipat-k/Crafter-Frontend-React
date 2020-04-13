@@ -9,21 +9,32 @@
 }
 
 .LogoutButton {
+  width: 100%;
   cursor: pointer;
-  border: 1px solid white;
-  color: white;
+  border: 1px solid #5a320e;
+  color: #5a320e;
   background: transparent;
   padding: 0.5rem;
   font: inherit;
-  margin: 0 5px;
 }
 
 .LogoutButton:hover {
   background: rgb(255, 44, 44);
+  color: white;
 }
 
 @media (min-width: 500px) {
   .NavItems {
     flex-flow: row;
+  }
+
+  .LogoutButton {
+    cursor: pointer;
+    border: 1px solid white;
+    color: white;
+    background: transparent;
+    padding: 0.5rem;
+    font: inherit;
+    margin: 0 5px;
   }
 }

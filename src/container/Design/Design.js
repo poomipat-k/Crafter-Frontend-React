@@ -1,32 +1,34 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import classes from "./Design.module.css";
 import Canvas from "../../components/Canvas/Canvas";
 import CraftControler from "../../components/CraftControler/CraftControler";
-import Spinner from "../../components/UI/Spinner/Spinner";
+import ErrorModal from "../../components/UI/Modal/ErrorModal";
+import LoadingSpinner from "../../components/UI/LodingSpinner/LoadingSpinner";
 import * as actions from "../../store/action/index";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 
-const Design = props => {
-  const { onGetDesignTemplate } = props;
+const Design = () => {
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const dispatch = useDispatch();
+  const { canvas, content } = useSelector((state) => state.design);
+
+  const fetchDesignData = useCallback(async () => {
+    try {
+      const responseData = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/api/design/polo/1/cotton`
+      );
+      dispatch(actions.setDesignTemplate(responseData));
+    } catch (err) {}
+  }, [sendRequest, dispatch]);
 
   useEffect(() => {
-    console.log("useEffect call api");
-    let url = `http://localhost:5000/api/design/polo/1/cotton`;
-    onGetDesignTemplate(url);
-  }, [onGetDesignTemplate]);
+    fetchDesignData();
+  }, [fetchDesignData]);
 
-  let designTemplate = props.error ? (
-    <h1 style={{ textAlign: "center" }}>
-      Error: <br />
-      Can not load design template from Server!
-      <br /> Please try again in a moment
-    </h1>
-  ) : (
-    <Spinner />
-  );
-
-  if (props.content && props.canvas) {
+  let designTemplate;
+  if (content && canvas) {
     designTemplate = (
       <div className={classes.DesignLayout}>
         <div className={classes.Canvas}>
@@ -38,21 +40,18 @@ const Design = props => {
       </div>
     );
   }
-  return designTemplate;
+  return (
+    <React.Fragment>
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner />
+        </div>
+      )}
+
+      {designTemplate}
+    </React.Fragment>
+  );
 };
 
-const mapStateToProps = state => {
-  return {
-    error: state.design.error,
-    content: state.design.content,
-    canvas: state.design.canvas
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onGetDesignTemplate: url => dispatch(actions.getDesignTemplate(url))
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Design);
+export default Design;

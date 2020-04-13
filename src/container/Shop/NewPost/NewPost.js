@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 
+import { useSelector } from "react-redux";
 import { useForm } from "../../../shared/hooks/form-hook";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
 import ErrorModal from "../../../components/UI/Modal/ErrorModal";
@@ -80,9 +81,10 @@ const NewPost = (props) => {
   const [imageIndex, setImageIndex] = useState();
   const [stockFormState, setStockFormState] = useState(INIT_STOCK_FORM_STATE);
   const [stockFormIsValid, setStockFormIsValid] = useState(false);
-
-  let [stockFormError, setStockFormError] = useState(false);
+  const [stockFormError, setStockFormError] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
+  const { token } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (showSuccessAlert) {
@@ -94,6 +96,47 @@ const NewPost = (props) => {
       };
     }
   }, [showSuccessAlert]);
+
+  useEffect(() => {
+    setStockFormState({
+      unisex: {
+        xs: { qty: "", price: "" },
+        s: { qty: "", price: "" },
+        m: { qty: "", price: "" },
+        l: { qty: "", price: "" },
+        xl: { qty: "", price: "" },
+        "2xl": { qty: "", price: "" },
+        "3xl": { qty: "", price: "" },
+        "4xl": { qty: "", price: "" },
+        "5xl": { qty: "", price: "" },
+        "6xl": { qty: "", price: "" },
+      },
+      male: {
+        xs: { qty: "", price: "" },
+        s: { qty: "", price: "" },
+        m: { qty: "", price: "" },
+        l: { qty: "", price: "" },
+        xl: { qty: "", price: "" },
+        "2xl": { qty: "", price: "" },
+        "3xl": { qty: "", price: "" },
+        "4xl": { qty: "", price: "" },
+        "5xl": { qty: "", price: "" },
+        "6xl": { qty: "", price: "" },
+      },
+      female: {
+        xs: { qty: "", price: "" },
+        s: { qty: "", price: "" },
+        m: { qty: "", price: "" },
+        l: { qty: "", price: "" },
+        xl: { qty: "", price: "" },
+        "2xl": { qty: "", price: "" },
+        "3xl": { qty: "", price: "" },
+        "4xl": { qty: "", price: "" },
+        "5xl": { qty: "", price: "" },
+        "6xl": { qty: "", price: "" },
+      },
+    });
+  }, [setStockFormState]);
 
   const indexChangeHandler = useCallback((updatedImageIndex) => {
     setImageIndex(updatedImageIndex);
@@ -170,22 +213,69 @@ const NewPost = (props) => {
       await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/shop`,
         "POST",
-        formData
+        formData,
+        {
+          Authorization: `Bearer ${token}`,
+        }
       );
       props.fetchCategories();
       setShowSuccessAlert(true);
+      setStockFormState({
+        unisex: {
+          xs: { qty: "", price: "" },
+          s: { qty: "", price: "" },
+          m: { qty: "", price: "" },
+          l: { qty: "", price: "" },
+          xl: { qty: "", price: "" },
+          "2xl": { qty: "", price: "" },
+          "3xl": { qty: "", price: "" },
+          "4xl": { qty: "", price: "" },
+          "5xl": { qty: "", price: "" },
+          "6xl": { qty: "", price: "" },
+        },
+        male: {
+          xs: { qty: "", price: "" },
+          s: { qty: "", price: "" },
+          m: { qty: "", price: "" },
+          l: { qty: "", price: "" },
+          xl: { qty: "", price: "" },
+          "2xl": { qty: "", price: "" },
+          "3xl": { qty: "", price: "" },
+          "4xl": { qty: "", price: "" },
+          "5xl": { qty: "", price: "" },
+          "6xl": { qty: "", price: "" },
+        },
+        female: {
+          xs: { qty: "", price: "" },
+          s: { qty: "", price: "" },
+          m: { qty: "", price: "" },
+          l: { qty: "", price: "" },
+          xl: { qty: "", price: "" },
+          "2xl": { qty: "", price: "" },
+          "3xl": { qty: "", price: "" },
+          "4xl": { qty: "", price: "" },
+          "5xl": { qty: "", price: "" },
+          "6xl": { qty: "", price: "" },
+        },
+      });
     } catch (err) {
-      setStockFormError(err.message);
+      if (
+        err.message ===
+        "Price data is not valid! please review your price data."
+      ) {
+        setStockFormError(err.message);
+      }
     }
   };
 
   return (
     <React.Fragment>
       <Alert
-        showSuccessAlert={showSuccessAlert}
+        show={showSuccessAlert}
         message="Successfully added a new post!"
       />
       <ErrorModal error={error} onClear={clearError} />
+
       <ErrorModal
         error={stockFormError}
         onClear={() => setStockFormError(false)}

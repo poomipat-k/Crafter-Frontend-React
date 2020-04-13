@@ -1,31 +1,11 @@
 import * as actionTypes from "./actionTypes";
-import axios from "axios";
 
-const setDesignTemplate = data => {
+export const setDesignTemplate = (data) => {
   return {
     type: actionTypes.SET_DESIGN_TEMPLATE,
-    designData: data
-  };
-};
-
-const fetchDesignTemplateFail = () => {
-  return {
-    type: actionTypes.FETCH_DESIGN_TEMPLATE_FAIL
-  };
-};
-
-export const getDesignTemplate = url => {
-  return dispatch => {
-    axios
-      .get(url)
-      .then(response => {
-        dispatch(setDesignTemplate(response.data));
-      })
-      .catch(error => {
-        dispatch(fetchDesignTemplateFail());
-      });
-  };
-};
+    data: data
+  }
+}
 
 export const setFocus = id => {
   return {

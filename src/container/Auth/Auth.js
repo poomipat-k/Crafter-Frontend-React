@@ -21,6 +21,7 @@ const Auth = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
@@ -61,7 +62,7 @@ const Auth = (props) => {
             responseData.isAdmin
           )
         );
-        props.history.push("/");
+        setLoginSuccess(true);
       } catch (err) {}
     } else {
       try {
@@ -106,17 +107,23 @@ const Auth = (props) => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
+  let showVerifiedEmailSuccess;
+  try {
+    showVerifiedEmailSuccess = props.location.search.includes("verified=true");
+  } catch (err) {}
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
 
       <div className={classes.FormContainer}>
+        <Alert show={loginSuccess} message="LOGIN SUCCESS!" />
         <div className={classes.Form}>
           <form onSubmit={submitHandler}>
             {isLoading && <LoadingSpinner asOverlay />}
 
             <Alert
-              showSuccessAlert={props.location.search.includes("verified=true")}
+              show={showVerifiedEmailSuccess}
               message="Successfully activate your account. Please try to login!"
             />
 
@@ -157,12 +164,14 @@ const Auth = (props) => {
               {isLoginMode ? "LOGIN" : "SIGNUP"}
             </Button>
           </form>
+
           {signupSuccess && !isLoginMode && (
             <p style={{ color: "green" }}>
               Need to verify your email! Please check your inbox and activate
               your account in your email box within 24 hours
             </p>
           )}
+
           <div className={classes.switchButton}>
             <Button inverse onClick={switchModeHandler}>
               SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}

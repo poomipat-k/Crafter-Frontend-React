@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import SexButtons from "./SexButton";
+import Add2CartButton from "./Add2CartButton";
 import classes from "./SummaryCard.module.scss";
 
 const SummaryCard = (props) => {
@@ -188,10 +189,12 @@ const SummaryCard = (props) => {
         </span>
       </div>
 
-      <div>
-        <button>Add To Cart</button>
-        <button>Buy Now</button>
-      </div>
+      <Add2CartButton
+        sex={activeSex}
+        size={activeSize}
+        quantity={chosenQuantity}
+        itemId={postData.id}
+      />
     </div>
   );
 };

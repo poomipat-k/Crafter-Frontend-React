@@ -15,8 +15,7 @@ import classes from "./Shop.module.css";
 const Shop = () => {
   const [loadedCategories, setLoadedCategories] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  const token = useSelector((state) => state.auth.token);
-  const isAdmin = useSelector((state) => state.auth.isAdmin);
+  const { token, isAdmin } = useSelector((state) => state.auth);
 
   const fetchCategories = useCallback(async () => {
     try {

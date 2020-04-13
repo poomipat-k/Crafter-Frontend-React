@@ -1,5 +1,7 @@
 import * as actionTypes from "../action/actionTypes";
 
+const TOKEN_LIFE_TIME = 1000 * 60 * 60 * 24;
+
 let initialState = {
   token: null,
   userId: null,
@@ -16,7 +18,7 @@ const login = (state, action) => {
   };
   const tokenExpirationDate =
     action.expirationDate ||
-    new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
+    new Date(new Date().getTime() + TOKEN_LIFE_TIME).toISOString();
 
   updatedState.tokenExpirationDate = tokenExpirationDate;
   localStorage.setItem(
@@ -24,7 +26,7 @@ const login = (state, action) => {
     JSON.stringify({
       userId: action.uid,
       token: action.token,
-      expiration: tokenExpirationDate.toISOString(),
+      expiration: tokenExpirationDate,
       isAdmin: action.isAdmin,
     })
   );

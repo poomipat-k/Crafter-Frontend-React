@@ -41,6 +41,7 @@ const ShopPost = () => {
   });
 
   const displayImage = useSelector((state) => state.shop.displayImage);
+  const { token, isAdmin } = useSelector((state) => state.auth);
   const history = useHistory();
 
   useEffect(() => {
@@ -64,10 +65,10 @@ const ShopPost = () => {
         "-"
       );
       if (path.split("/").slice(-1)[0] !== postId) {
-        console.log("PATH: ",path)
-        console.log('POSTID: ', postId)
+        console.log("PATH: ", path);
+        console.log("POSTID: ", postId);
 
-        console.log(path.split("/").slice(-1)[0])
+        console.log(path.split("/").slice(-1)[0]);
         history.push(path);
       }
     }
@@ -124,29 +125,33 @@ const ShopPost = () => {
   };
 
   const deletePostHandler = (id) => {
+    let deleteStatus;
     const deletePostRequest = async () => {
       try {
-        await sendRequest(
+        deleteStatus = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/api/shop/${id}`,
-          "DELETE"
+          "DELETE",
+          null,
+          { Authorization: `Bearer ${token}` }
         );
       } catch (err) {}
     };
     setShowModal(false);
+
     deletePostRequest();
 
-    setLoadedPost(null);
-
-    let redirectPath = `/shop`;
-    if (loadedPost) {
-      redirectPath = `/shop/${loadedPost.categoryUrl}`;
-    }
-
-    setLoadedPost(null);
-
-    setTimeout(() => {
-      history.push(redirectPath);
-    }, 500);
+    try {
+      if (deleteStatus.success) {
+        setLoadedPost(null);
+        let redirectPath = `/shop`;
+        if (loadedPost) {
+          redirectPath = `/shop/${loadedPost.categoryUrl}`;
+        }
+        setTimeout(() => {
+          history.push(redirectPath);
+        }, 500);
+      }
+    } catch (err) {}
   };
 
   const deleteImageHandler = (id, image) => {
@@ -157,7 +162,10 @@ const ShopPost = () => {
           `${process.env.REACT_APP_BACKEND_URL}/api/shop/image/${id}`,
           "DELETE",
           JSON.stringify({ image: image }),
-          { "Content-Type": "application/json" }
+          {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
         );
       } catch (err) {}
       if (response && response.success) {
@@ -236,7 +244,11 @@ const ShopPost = () => {
           {postData}
           {summary}
         </div>
-        <div style={{ margin: "auto" }}>{adminButtons}</div>
+
+        {token && isAdmin && (
+          <div style={{ margin: "auto" }}>{adminButtons}</div>
+        )}
+
         {productDescription && (
           <div className={classes.description}>
             <h1>Product description</h1>
