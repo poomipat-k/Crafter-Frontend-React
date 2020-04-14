@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useHttpClient } from "../../../shared/hooks/http-hook";
-import LoadingSpinner from "../../../components/UI/LodingSpinner/LoadingSpinner";
-import ErrorModal from "../../../components/UI/Modal/ErrorModal";
+import { useHttpClient } from "../../../../shared/hooks/http-hook";
+import LoadingSpinner from "../../../../components/UI/LodingSpinner/LoadingSpinner";
+import ErrorModal from "../../../../components/UI/Modal/ErrorModal";
+import Auth from "../../../Auth/Auth";
+import Modal from "../../../../components/UI/Modal/Modal";
+import Alert from "../../../../components/UI/Alert/Alert";
 import classes from "./Add2CartButton.module.css";
-import Auth from "../../Auth/Auth";
-import Modal from "../../../components/UI/Modal/Modal";
-import Alert from "../../../components/UI/Alert/Alert";
 
 const MUST_LOGIN_ERROR_TEXT = "Must login to proceed!";
 
@@ -25,7 +25,7 @@ const Add2CartButton = (props) => {
     if (showSuccessAlert) {
       let animationTimer = setTimeout(() => {
         setShowSuccessAlert(false);
-      }, 3000);
+      }, 1500);
       return () => {
         clearTimeout(animationTimer);
       };

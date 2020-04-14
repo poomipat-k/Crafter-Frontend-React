@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import SexButtons from "./SexButton";
-import Add2CartButton from "./Add2CartButton";
+import SexButtons from "./SummaryCardUI/SexButton";
+import Add2CartButton from "./SummaryCardUI/Add2CartButton";
+import QuantityController from "./SummaryCardUI/QuantityController";
 import classes from "./SummaryCard.module.scss";
 
 const SummaryCard = (props) => {
@@ -150,37 +151,17 @@ const SummaryCard = (props) => {
 
       <div className={classes.quantityContainer}>
         <span className={classes.font20}>Quantity: </span>
+        
         <span style={{ marginLeft: "32px" }}>
-          <button
-            onClick={quantityDecrementHandler}
-            className={[
-              classes.minusButton,
-              !(activeSex && activeSize) ? classes.disabled : null,
-            ].join(" ")}
-            disabled={!(activeSex && activeSize)}
-          >
-            -
-          </button>
-          <input
-            className={[
-              classes.quantityInput,
-              !(activeSex && activeSize) ? classes.disabled : null,
-            ].join(" ")}
-            type="number"
-            onChange={(event) => onQuantityChangeHandler(event)}
-            value={chosenQuantity || 1}
-            disabled={!(activeSex && activeSize)}
+          <QuantityController
+            onDecrement={quantityDecrementHandler}
+            onChange={onQuantityChangeHandler}
+            onIncrement={quantityIncrementHandler}
+            activeSex={activeSex}
+            activeSize={activeSize}
+            chosenQuantity={chosenQuantity}
           />
-          <button
-            onClick={quantityIncrementHandler}
-            className={[
-              classes.plusButton,
-              !(activeSex && activeSize) ? classes.disabled : null,
-            ].join(" ")}
-            disabled={!(activeSex && activeSize)}
-          >
-            +
-          </button>
+
           {availableQuantity && (
             <div className={classes.availableQuantity}>
               {availableQuantity} piece available

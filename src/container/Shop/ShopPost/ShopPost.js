@@ -65,10 +65,6 @@ const ShopPost = () => {
         "-"
       );
       if (path.split("/").slice(-1)[0] !== postId) {
-        console.log("PATH: ", path);
-        console.log("POSTID: ", postId);
-
-        console.log(path.split("/").slice(-1)[0]);
         history.push(path);
       }
     }
