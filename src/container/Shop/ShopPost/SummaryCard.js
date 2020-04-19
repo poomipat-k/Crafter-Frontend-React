@@ -151,8 +151,9 @@ const SummaryCard = (props) => {
 
       <div className={classes.quantityContainer}>
         <span className={classes.font20}>Quantity: </span>
-        
+
         <span style={{ marginLeft: "32px" }}>
+          
           <QuantityController
             onDecrement={quantityDecrementHandler}
             onChange={onQuantityChangeHandler}

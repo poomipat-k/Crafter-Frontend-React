@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useHttpClient } from "../../../../shared/hooks/http-hook";
 import LoadingSpinner from "../../../../components/UI/LodingSpinner/LoadingSpinner";
@@ -9,6 +9,7 @@ import Auth from "../../../Auth/Auth";
 import Modal from "../../../../components/UI/Modal/Modal";
 import Alert from "../../../../components/UI/Alert/Alert";
 import classes from "./Add2CartButton.module.css";
+import * as actions from "../../../../store/action/index";
 
 const MUST_LOGIN_ERROR_TEXT = "Must login to proceed!";
 
@@ -20,6 +21,7 @@ const Add2CartButton = (props) => {
   const history = useHistory();
   let isDisabled = !(sex && size && quantity > 0);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (showSuccessAlert) {
@@ -31,6 +33,19 @@ const Add2CartButton = (props) => {
       };
     }
   }, [showSuccessAlert]);
+
+  // Fetch cart data
+  const fetchCartData = async () => {
+    const response = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/api/cart`,
+      {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    const data = await response.json();
+    return data;
+  };
 
   const add2Cart = async () => {
     const add2cartAPIRequest = async (variation, qty, id) => {
@@ -57,18 +72,32 @@ const Add2CartButton = (props) => {
   };
 
   const buyNowHandler = async () => {
-    let data = await add2Cart();
-    if (data) {
-      history.push("/cart");
+    let res = await add2Cart();
+    if (res) {
+      fetchCartData()
+        .then((data) => {
+          dispatch(actions.setCartItems(data.cart, data.quantity));
+          history.push("/cart");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       setShowLogin(true);
     }
   };
 
   const add2cartHandler = async () => {
-    let data = await add2Cart();
-    if (data) {
-      setShowSuccessAlert(true);
+    let res = await add2Cart();
+    if (res) {
+      fetchCartData()
+        .then((data) => {
+          dispatch(actions.setCartItems(data.cart, data.quantity));
+          setShowSuccessAlert(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       setShowLogin(true);
     }

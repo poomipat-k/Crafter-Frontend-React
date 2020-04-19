@@ -1,0 +1,22 @@
+.CartTableHeader {
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
+  padding: 16px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.flexHeader {
+  flex: 1 0 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.flexHeaderProduct {
+  flex: 3 0 0;
+  text-align: start;
+  padding-left: 24px;
+  font-size: 20px;
+  font-weight: 500;
+}

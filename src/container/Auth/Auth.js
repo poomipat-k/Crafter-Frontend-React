@@ -54,6 +54,7 @@ const Auth = (props) => {
             "Content-Type": "application/json",
           }
         );
+        setLoginSuccess(true);
         dispatch(
           actions.login(
             responseData.userId,
@@ -62,7 +63,6 @@ const Auth = (props) => {
             responseData.isAdmin
           )
         );
-        setLoginSuccess(true);
       } catch (err) {}
     } else {
       try {

@@ -5,7 +5,9 @@ export const SET_FOUCS_COLOR = "SET_FOUCS_COLOR";
 
 export const SET_DISPLAY_IMAGE = "SET_DISPLAY_IMAGE";
 
-export const SET_ACTIVE_SEX = "SET_ACTIVE_SEX";
-
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
+
+export const SET_CART_ITEMS = "SET_CART_ITEMS";
+export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM";
+export const CHECKOUT_ITEMS = "CHECKOUT_ITEMS";

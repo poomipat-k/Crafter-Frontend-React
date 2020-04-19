@@ -1,0 +1,68 @@
+.CartItemContainer {
+  background-color: rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 12px;
+  padding: 6px;
+  font-size: 20px;
+  text-align: center;
+  align-items: center;
+}
+
+.flexItem {
+  flex: 1 0 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.flexItemProduct {
+  flex: 3 0 0;
+  text-align: start;
+  padding-left: 0;
+  font-size: 20px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.Title {
+  word-break: break-word;
+}
+
+.CartItemContainer a {
+  text-decoration: none;
+  color: black;
+}
+
+.ProductItem {
+  margin: 0 10px;
+}
+
+.VariationContainer {
+  display: flex;
+  flex-flow: row;
+  text-align: center;
+}
+
+.Sex {
+  text-transform: uppercase;
+  color: rgb(24, 55, 158);
+}
+
+.Size {
+  margin-left: 30px;
+  color: rgb(24, 55, 158);
+  text-transform: uppercase;
+}
+
+.ProductItem img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.deleteLink {
+  cursor: pointer;
+  color: rgb(230, 36, 36);
+}

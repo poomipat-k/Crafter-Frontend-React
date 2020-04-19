@@ -1,8 +1,10 @@
 import React from "react";
 
+import { useSelector } from "react-redux";
+
 import classes from "./CartIcon.module.css";
 
-const CartIcon = (props) => {
+const CartIcon = () => {
   let iconSVG = (
     <svg
       height="24pt"
@@ -15,11 +17,13 @@ const CartIcon = (props) => {
       <path d="m362 405c0 24.8125 20.1875 45 45 45s45-20.1875 45-45-20.1875-45-45-45-45 20.1875-45 45zm45-15c8.269531 0 15 6.730469 15 15s-6.730469 15-15 15-15-6.730469-15-15 6.730469-15 15-15zm0 0" />
     </svg>
   );
-  let itemQty = 5;
+
+  const { quantity } = useSelector((state) => state.cart);
+
   return (
     <div className={classes.IconContainer}>
       {iconSVG}
-      <span className={classes.quantity}>{itemQty}</span>
+      <span className={classes.quantity}>{quantity > 0 ? quantity : null}</span>
     </div>
   );
 };

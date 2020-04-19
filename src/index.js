@@ -12,6 +12,7 @@ import * as serviceWorker from "./serviceWorker";
 import designReducer from "./store/reducer/design";
 import shopReducer from "./store/reducer/shop";
 import authReducer from "./store/reducer/auth";
+import cartReducer from "./store/reducer/cart";
 
 const composeEnhancers =
   process.env.NODE_ENV === "development"
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   design: designReducer,
   shop: shopReducer,
   auth: authReducer,
+  cart: cartReducer,
 });
 
 const store = createStore(

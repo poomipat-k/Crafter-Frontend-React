@@ -1,0 +1,51 @@
+.FooterContainer {
+  bottom: 0;
+  z-index: 5;
+  position: sticky;
+  background-color: #ccc;
+  margin-top: 12px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.Quantity {
+  padding: 12px;
+
+  font-size: 24px;
+  flex: 6 0 0;
+  text-align: right;
+}
+
+.TotalPrice {
+  padding: 12px;
+
+  font-size: 24px;
+  flex: 1 0 0;
+  font-size: 32px;
+  text-align: center;
+}
+
+.ButtonContainer {
+  flex: 1 0 0;
+}
+
+.CheckoutButton {
+  color: white;
+  border: none;
+  border-radius: 0;
+  box-sizing: border-box;
+  background-color: #ff6600;
+  text-decoration: none;
+  outline: none;
+  padding: 16px 36px;
+  margin: auto;
+}
+
+.CheckoutButton:hover,
+.CheckoutButton:active {
+  background-color: #ff934b;
+}
