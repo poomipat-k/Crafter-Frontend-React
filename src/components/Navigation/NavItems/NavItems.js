@@ -22,7 +22,7 @@ const NavItems = () => {
         <CartIcon />
       </NavItem>
       {token ? (
-        <li>
+        <li className={classes.LogoutContainer}>
           <button
             onClick={() => dispatch(actions.logout())}
             className={classes.LogoutButton}

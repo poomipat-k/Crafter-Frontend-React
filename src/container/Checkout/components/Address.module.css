@@ -1,0 +1,65 @@
+/* Form styles */
+.FormContainer {
+  display: flex;
+  flex-flow: column wrap;
+  padding: 16px;
+  border: 2px dashed red;
+  box-shadow: 2px 4px 8px #ccc;
+}
+
+.cityZipPhone {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.city {
+  width: 200px;
+  margin-right: 32px;
+}
+
+.zipcode {
+  width: 60px;
+  margin-right: 32px;
+}
+
+.phone {
+  width: 115px;
+  margin-right: 32px;
+}
+
+.saveLocationButton {
+  width: 80px;
+}
+
+.saveLocationButton button {
+  background-color: rgb(34, 124, 34);
+  border: none;
+}
+
+.saveLocationButton button:hover {
+  background-color: rgb(63, 161, 63);
+}
+
+/* Address display style */
+.DisplayContainer {
+  padding: 8px;
+  box-shadow: 2px 4px 8px rgba(0,0,0,0.4);
+  margin: auto;
+  margin-left: 0px;
+}
+
+.DisplayContainer label {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.DisplayData {
+  font-size: 20px;
+  font-weight: 400;
+  padding: 8px 16px;
+  color: rgb(70, 70, 233);
+}
+
+.DisplayData label {
+  color: black;
+}

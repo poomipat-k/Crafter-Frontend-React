@@ -1,0 +1,12 @@
+.Container {
+  display: flex;
+  flex-flow: column;
+  width: 90%;
+  margin: auto;
+  
+}
+
+.Redirect {
+  z-index: 5;
+  text-align: center;
+}

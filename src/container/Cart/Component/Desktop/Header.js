@@ -8,11 +8,13 @@ const HeaderPC = (props) => {
     <React.Fragment>
       <div className={classes.CartTableHeader}>
         <div className={[classes.flexHeaderProduct].join(" ")}>
-          <Checkbox
-            checked={props.checked}
-            onChange={props.checkboxHandler}
-            inputProps={{ "aria-label": "primary checkbox" }}
-          />
+          {props.showCheckbox && (
+            <Checkbox
+              checked={props.checked}
+              onChange={props.checkboxHandler}
+              inputProps={{ "aria-label": "primary checkbox" }}
+            />
+          )}
           Product
         </div>
         <div className={[classes.flexHeader].join(" ")}>Unit Price</div>

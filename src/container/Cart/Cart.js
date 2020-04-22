@@ -13,13 +13,12 @@ import Auth from "../Auth/Auth";
 import Modal from "../../components/UI/Modal/Modal";
 
 import classes from "./Cart.module.css";
-import "./CartItemAnimation.css";
 
 const Cart = () => {
   const { innerWidth } = window;
   const [isDesktop, setIsDesktop] = useState(true);
 
-  const { cart, quantity } = useSelector((state) => state.cart);
+  const { cart } = useSelector((state) => state.cart);
   const { token } = useSelector((state) => state.auth);
 
   const { error, sendRequest, clearError } = useHttpClient();
@@ -239,10 +238,12 @@ const Cart = () => {
   };
 
   let totalPrice = 0;
+  let totalQuantity = 0;
   try {
     cart.forEach((item) => {
       if (checkboxState[item.id]) {
         totalPrice += item.quantity * item.price;
+        totalQuantity += item.quantity;
       }
     });
   } catch (err) {}
@@ -279,6 +280,7 @@ const Cart = () => {
 
           {checkboxState && (
             <HeaderPC
+              showCheckbox
               checked={masterChecked}
               checkboxHandler={(event) => masterCheckboxHandler(event)}
             />
@@ -310,10 +312,11 @@ const Cart = () => {
           )}
 
           <CartFooter
-            quantity={quantity}
+            quantity={totalQuantity}
             totalPrice={totalPrice}
             onCheckout={checkoutHandler}
             isLoading={checkoutLoading}
+            buttonText="Check Out"
           />
         </div>
       </React.Fragment>

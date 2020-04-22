@@ -12,6 +12,10 @@
   align-items: center;
 }
 
+.Success {
+  background-color: rgb(152, 201, 224);
+}
+
 .Quantity {
   padding: 12px;
 

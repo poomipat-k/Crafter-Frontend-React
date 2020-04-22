@@ -18,6 +18,10 @@
   font: inherit;
 }
 
+.LogoutContainer {
+  margin-left: 24px;
+}
+
 .LogoutButton:hover {
   background: rgb(255, 44, 44);
   color: white;

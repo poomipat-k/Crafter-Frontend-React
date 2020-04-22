@@ -7,7 +7,12 @@ import classes from "./CartFooter.module.css";
 
 const CartFooter = (props) => {
   return (
-    <div className={classes.FooterContainer}>
+    <div
+      className={[
+        classes.FooterContainer,
+        props.success && classes.Success,
+      ].join(" ")}
+    >
       {props.isLoading && <LoadingSpinner asOverlay />}
       <div className={classes.Quantity}>Subtotal ({props.quantity} items):</div>
       <div className={[classes.TotalPrice].join(" ")}>
@@ -15,7 +20,7 @@ const CartFooter = (props) => {
       </div>
       <div className={[classes.ButtonContainer].join(" ")}>
         <button onClick={props.onCheckout} className={classes.CheckoutButton}>
-          Check Out
+          {props.buttonText}
         </button>
       </div>
     </div>
