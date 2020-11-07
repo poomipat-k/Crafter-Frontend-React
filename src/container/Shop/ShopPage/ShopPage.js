@@ -7,14 +7,14 @@ import { useHttpClient } from "../../../shared/hooks/http-hook";
 
 import classes from "./ShopPage.module.css";
 
-const ShopPage = props => {
+const ShopPage = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedItems, setLoadedItems] = useState([]);
 
   const { category } = props;
 
   const fetchItems = useCallback(
-    async category => {
+    async (category) => {
       try {
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/api/shop/${category}`
@@ -31,7 +31,14 @@ const ShopPage = props => {
 
   let displayItems;
   if (!isLoading && loadedItems.length !== 0)
-    displayItems = loadedItems.map(item => {
+    displayItems = loadedItems.map((item) => {
+      let total = 0;
+      for (let sex in item.stock) {
+        for (let size in item.stock[sex]) {
+          total += item.stock[sex][size].qty;
+        }
+      }
+
       return (
         <ShopItem
           key={item.id}
@@ -40,7 +47,7 @@ const ShopPage = props => {
           image={item.Images[0]}
           title={item.title}
           price={item.price}
-          stock={item.stock.total}
+          stock={total}
           sold={item.sold}
         />
       );

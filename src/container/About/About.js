@@ -1,14 +1,7 @@
 import React from "react";
 
-import Popover from "../../components/UI/Popover/Popover";
-
-const about = () => {
-  return (
-    <div style={{ marginLeft: "160px" }}>
-      <h1>Test About</h1>
-      <Popover />
-    </div>
-  );
+const About = () => {
+  return <h1>About page</h1>;
 };
 
-export default about;
+export default About;

@@ -50,6 +50,7 @@ const Design = () => {
       )}
 
       {designTemplate}
+      <h1 className="center">Under developing by Poomipat Khamai.</h1>
     </React.Fragment>
   );
 };

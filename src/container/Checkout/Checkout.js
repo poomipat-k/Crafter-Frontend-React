@@ -5,8 +5,10 @@ import { useSelector } from "react-redux";
 import Auth from "../../container/Auth/Auth";
 import LoadingSpinner from "../../components/UI/LodingSpinner/LoadingSpinner";
 import CheckoutItem from "./components/CheckoutItem";
-import CartFooter from "../Cart/Component/Desktop/CartFooter";
+import CheckoutFooter from "./components/CheckoutFooter";
 import Address from "./components/Address";
+import PaypalButton from "./components/PaypalButton";
+import Alert from "../../components/UI/Alert/Alert";
 
 import classes from "./Checkout.module.css";
 
@@ -15,6 +17,9 @@ const Checkout = () => {
   const { checkoutItems } = useSelector((state) => state.cart);
   const history = useHistory();
   const [showRedirectLoading, setShowRedirectLoading] = useState(false);
+  const [paidFor, setPaidFor] = useState(false);
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
+  const [captureId, setCaptureId] = useState("");
 
   let dataLenght = checkoutItems.length;
   useEffect(() => {
@@ -66,16 +71,32 @@ const Checkout = () => {
         />
       );
     });
+
     content = (
       <React.Fragment>
-        <Address />
+        {!paidFor && <Address />}
         {items}
-        <CartFooter
-          success
+        <CheckoutFooter
           quantity={totalQuantity}
           totalPrice={totalPrice}
           buttonText="Place Order"
+          success={paidFor}
         />
+
+        <Alert
+          style={{ padding: "16px" }}
+          show={paidFor}
+          message={`Payment received. ref id ${captureId}.`}
+        />
+
+        <PaypalButton
+          items={checkoutItems}
+          setPaidFor={setPaidFor}
+          setPaymentProcessing={setPaymentProcessing}
+          setCaptureId={setCaptureId}
+        />
+
+        {paymentProcessing && <LoadingSpinner asOverlay />}
       </React.Fragment>
     );
   }

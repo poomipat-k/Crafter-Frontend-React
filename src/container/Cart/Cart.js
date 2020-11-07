@@ -53,14 +53,19 @@ const Cart = () => {
 
   useEffect(() => {
     try {
-      let updatedCheckbox = {};
-      cart.forEach((cartItem) => {
-        let id = cartItem.id;
-        updatedCheckbox[id] = true;
-      });
-      setCheckboxState(updatedCheckbox);
+      if (cart) {
+        // First time loading the page
+
+        let updatedCheckbox = {};
+        cart.forEach((cartItem) => {
+          let id = cartItem.id;
+          updatedCheckbox[id] = true;
+        });
+        setCheckboxState(updatedCheckbox);
+        setMasterChecked(true);
+      }
     } catch (err) {}
-  }, [cart]);
+  }, [cart.length]);
 
   useEffect(() => {
     if (innerWidth > 500) {
@@ -314,7 +319,7 @@ const Cart = () => {
           <CartFooter
             quantity={totalQuantity}
             totalPrice={totalPrice}
-            onCheckout={checkoutHandler}
+            onClick={checkoutHandler}
             isLoading={checkoutLoading}
             buttonText="Check Out"
           />

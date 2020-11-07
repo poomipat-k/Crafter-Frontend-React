@@ -19,7 +19,7 @@ import ErrorModal from "../../../components/UI/Modal/ErrorModal";
 const Address = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const { token } = useSelector((state) => state.auth);
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, setFormData] = useForm(
     {
       address: {
         value: "",
@@ -115,6 +115,33 @@ const Address = () => {
         setAddressDisplayMode("add");
       }
     }
+  };
+
+  const onEditLocationHandler = () => {
+    if (fetchedLocation.address) {
+      setFormData(
+        {
+          address: {
+            value: fetchedLocation.address,
+            isValid: true,
+          },
+          city: {
+            value: fetchedLocation.city,
+            isValid: true,
+          },
+          zipcode: {
+            value: fetchedLocation.zipcode,
+            isValid: true,
+          },
+          phone: {
+            value: fetchedLocation.phone,
+            isValid: true,
+          },
+        },
+        true
+      );
+    }
+    setAddressDisplayMode("edit");
   };
 
   let displayAddress;
@@ -215,9 +242,7 @@ const Address = () => {
             {fetchedLocation.phone}
           </div>
           <div style={{ marginTop: "16px", marginLeft: "16px" }}>
-            <Button onClick={() => setAddressDisplayMode("edit")}>
-              Edit location
-            </Button>
+            <Button onClick={onEditLocationHandler}>Edit location</Button>
           </div>
         </div>
       );

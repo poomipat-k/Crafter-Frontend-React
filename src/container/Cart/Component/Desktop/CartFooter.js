@@ -19,7 +19,7 @@ const CartFooter = (props) => {
         ฿{priceFormat(props.totalPrice)}
       </div>
       <div className={[classes.ButtonContainer].join(" ")}>
-        <button onClick={props.onCheckout} className={classes.CheckoutButton}>
+        <button onClick={props.onClick} className={classes.CheckoutButton}>
           {props.buttonText}
         </button>
       </div>

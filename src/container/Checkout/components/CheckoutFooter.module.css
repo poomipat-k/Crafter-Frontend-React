@@ -1,0 +1,34 @@
+.FooterContainer {
+  bottom: 0;
+  z-index: 5;
+  position: sticky;
+  background-color: #ccc;
+  margin-top: 12px;
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.Success {
+  background-color: rgba(45, 210, 30, 0.65);
+}
+
+.Quantity {
+  padding: 12px;
+
+  font-size: 24px;
+  flex: 6 0 0;
+  text-align: right;
+}
+
+.TotalPrice {
+  padding: 12px;
+
+  font-size: 24px;
+  flex: 1 0 0;
+  font-size: 32px;
+  text-align: center;
+}
